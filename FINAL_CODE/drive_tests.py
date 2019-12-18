@@ -27,7 +27,17 @@ status = 'INITIALIZING'
 wait_status = 1
 
 def run_t1(p_speed: int, s_speed:[], torque_ratio, i_torque):
-    
+    cal_b, cal_m = get_cal_data()
+    P_RPM = 0
+    S_RPM = 0
+    ADC_raw = 0
+    P_time = 0
+    S_time = 0
+    ADC_time = 0
+    error = 0
+    servo = init_GPIO()
+    bus = init_I2C()
+    complete = 0
     def t1_backend(servo, bus, cal_m, cal_b):
         #save in a folder with all the other drive tests
         file_name = '/media/usb1/DYNODATA/drive/test1v'+str(len(os.listdir('/media/usb1/DYNODATA/drive/test')))+'.csv'
@@ -53,9 +63,25 @@ def run_t1(p_speed: int, s_speed:[], torque_ratio, i_torque):
                 #increment the speed
 
             f.close()
+    t1_backend(servo, bus, cal_m, cal_b)
+    torque_up(cal_m, cal_b, 0, bus)
+    speed_up_primary(0, servo, bus)
+    speed_up_secondary(0, servo, bus)
 
 
 def run_t2(i_torque:[],s_speed:[],torque_ratio):
+    cal_b, cal_m = get_cal_data()
+    P_RPM = 0
+    S_RPM = 0
+    ADC_raw = 0
+    P_time = 0
+    S_time = 0
+    ADC_time = 0
+    error = 0
+    servo = init_GPIO()
+    bus = init_I2C()
+    complete = 0
+
     def t2_backend(servo, bus, cal_m, cal_b):
         #save in a folder with all the other drive tests
         file_name = '/media/usb1/DYNODATA/drive/test2v'+str(len(os.listdir('/media/usb1/DYNODATA/drive/test')))+'.csv'
@@ -80,8 +106,24 @@ def run_t2(i_torque:[],s_speed:[],torque_ratio):
                     #increment the speed
                     time.sleep(500)
             f.close()
+    t2_backend(servo, bus, cal_m, cal_b)
+    torque_up(cal_m, cal_b, 0, bus)
+    speed_up_primary(0, servo, bus)
+    speed_up_secondary(0, servo, bus)
 
-def run_t3(o_torque:[], s_speed:[] ,torque_ratio):
+def run_t3(o_torque:[], s_speed:[], torque_ratio):
+    cal_b, cal_m = get_cal_data()
+    P_RPM = 0
+    S_RPM = 0
+    ADC_raw = 0
+    P_time = 0
+    S_time = 0
+    ADC_time = 0
+    error = 0
+    servo = init_GPIO()
+    bus = init_I2C()
+    complete = 0
+
     def t3_backend(servo, bus, cal_m, cal_b):
         #save in a folder with all the other drive tests
         file_name = '/media/usb1/DYNODATA/drive/test3v'+str(len(os.listdir('/media/usb1/DYNODATA/drive/test')))+'.csv'
@@ -105,8 +147,24 @@ def run_t3(o_torque:[], s_speed:[] ,torque_ratio):
                     +str(output_torque))#need to add in variator ratio
                     #increment the speed
             f.close()
+    t3_backend(servo, bus, cal_m, cal_b)
+    torque_up(cal_m, cal_b, 0, bus)
+    speed_up_primary(0, servo, bus)
+    speed_up_secondary(0, servo, bus)
 
 def run_t4(i_torque:[], p_speed:[] ,torque_ratio):
+    cal_b, cal_m = get_cal_data()
+    P_RPM = 0
+    S_RPM = 0
+    ADC_raw = 0
+    P_time = 0
+    S_time = 0
+    ADC_time = 0
+    error = 0
+    servo = init_GPIO()
+    bus = init_I2C()
+    complete = 0
+
     def t4_backend(servo, bus, cal_m, cal_b):
         #save in a folder with all the other drive tests
         file_name = '/media/usb1/DYNODATA/drive/test3v'+str(len(os.listdir('/media/usb1/DYNODATA/drive/test')))+'.csv'
@@ -130,4 +188,8 @@ def run_t4(i_torque:[], p_speed:[] ,torque_ratio):
                     +str(output_torque))#need to add in variator ratio
                     #increment the speed
             f.close()
+    t4_backend(servo, bus, cal_m, cal_b)
+    torque_up(cal_m, cal_b, 0, bus)
+    speed_up_primary(0, servo, bus)
+    speed_up_secondary(0, servo, bus)
             
