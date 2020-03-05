@@ -22,18 +22,20 @@ def torque_up(cal_m, cal_b, requested_torque, bus):
 
     Resets the OUTPUT torque to the specified value 
     """
-    step_brake(-1)
+    print('REALEASE BREAK')
+    step_brake(-20)
     num_good = 0
     ADC_time_last = 0
     max_data = 10000
     [P_time, P_RPM, S_time, S_RPM, ADC_time, ADC_raw, error] = [0,0,0,0,0,0,0]
+    print('BREAKING ' + str(requested_torque))
     while convert_ADC_raw_torque(ADC_raw, cal_b, cal_m) < requested_torque and num_good < max_data:
         [P_time, P_RPM, S_time, S_RPM, ADC_time, ADC_raw, error] = get_values(bus)
         # Confirm transmission was successful and not a duplicate data point
         if error == 0 and not ADC_time == ADC_time_last:
             num_good = num_good+1
-        step_brake(1)
-        time.sleep(500)
+        step_brake(.01)
+        time.sleep(.01)
 
 def speed_up_primary(rpm, servo, bus):
     """
@@ -47,14 +49,16 @@ def speed_up_primary(rpm, servo, bus):
 
     Sets the primary's speed/input speed to rpm
     """
+    print('PRIMARY SPEED UP TO' + str(rpm))
     s=1
     ADC_last = 0
     set_throttle(servo, 0)
-    time.sleep(500)
+    time.sleep(.500)
     [P_time, P_RPM, S_time, S_RPM, ADC_time, ADC_raw, error] = [0,0,0,0,0,0,0]
+    print(type(P_RPM),type(rpm))
     while(s < 100 and P_RPM < rpm):
         set_throttle(servo, s)
-        time.sleep(500)
+        time.sleep(.01)
         [P_time, P_RPM, S_time, S_RPM, ADC_time, ADC_raw, error] = get_values(bus)
         s = s + 1
 
@@ -73,10 +77,11 @@ def speed_up_secondary(rpm, servo, bus):
     s=1
     ADC_last = 0
     set_throttle(servo, 0)
-    time.sleep(500)
+    time.sleep(.500)
+    print('SECONDARY SPEED UP TO' + str(rpm))
     [P_time, P_RPM, S_time, S_RPM, ADC_time, ADC_raw, error] = [0,0,0,0,0,0,0]
     while(s < 100 and S_RPM < rpm):
         set_throttle(servo, s)
-        time.sleep(500)
+        time.sleep(.01)
         [P_time, P_RPM, S_time, S_RPM, ADC_time, ADC_raw, error] = get_values(bus)
         s = s + 1

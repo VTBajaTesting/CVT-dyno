@@ -206,7 +206,7 @@ def convert_ADC_raw_torque(ADC_log, cal_b, cal_m):
     # Returns list of torque values with the same timestamps as the original data set.
     # Call as: TORQUE = convert_ADC_raw_torque(ADC_raw, cal_b, cal_m)
 
-    TORQUE = [(float(x)-cal_b)/cal_m for x in ADC_log]
+    TORQUE = (ADC_log-cal_b)/cal_m
     return TORQUE
 
 def write_file(time_data, data, filename):
