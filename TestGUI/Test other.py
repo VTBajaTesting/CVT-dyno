@@ -23,7 +23,7 @@ def run_t6():
     canvas.get_tk_widget().grid(row=0, column=0)
     x = [0.1, 0.2, 0.3]
     y = [-0.1, -0.2, -0.3]
-    plot.set_ylabel('Percent Efficiency')
+    plot.set_ylabel('Output Shaft Torque (N*m)')
     plot.set_xlabel('Output Shaft Speed (RPM)')
     plot.plot(x, y, color="blue", marker="x", linestyle="")
 
@@ -36,12 +36,12 @@ def run_t6():
 ## Create widgets
 blank_space1 = tk.Label(text = '     ', bg = 'grey', font = (None, 30))
 
-
+speedLbl = tk.Label(text="Set Secondary Speed", font=("Arial", 35), bg="grey")
 torqueLbl = tk.Label(text="Set Input Torque", font=("Arial", 35), bg="grey")
 
 
-
-
+secondarySpeed = tk.Entry(font=("Arial", 35), width = 10)
+speedUnit = tk.Label(text="RPM", font=("Arial", 35), bg="grey")
 torqueEntry = tk.Entry(font=("Arial", 35), width = 10)
 torqueUnit = tk.Label(text="N*M", font=("Arial", 35), bg="grey")
 
@@ -59,20 +59,21 @@ root.columnconfigure(0, weight=1,)
 
 
 blank_space1.grid(row=0, pady=(50,50))
+speedLbl.grid(row=1, column=0, sticky="W", padx=(400, 10))
+
+torqueLbl.grid(row=1, column=2, sticky="E", padx=(10, 400))
+
+secondarySpeed.grid(row=3, column=0, pady=(25, 25), padx=(200,0))
+speedUnit.grid(row=3, column=0, pady=(25, 25), sticky='E', padx=(0,75))
+torqueEntry.grid(row=3, column=2, padx=(50, 400))
+torqueUnit.grid(row=3, column=2, padx=(50, 0))
 
 
+runButton.grid(row=4, column=0, pady=(100,25), sticky='E')
+stopButton.grid(row=4, column=1, pady=(100,25), sticky='W')
 
-
-
-
-
-
-runButton.grid(row=4, column=0, pady=(100,25), sticky='W', padx=(700, 0))
-stopButton.grid(row=4, column=1, pady=(100,25), sticky='W',padx=(0,710))
-torqueEntry.grid(row=3, column=0, sticky='EW', columnspan=2, padx=(760,760))
-torqueUnit.grid(row=3, column=1, sticky='W', padx=(150,0))
 backButton.grid(row=5, column=0, pady=(450,25), sticky='W', padx=(50, 0))
-torqueLbl.grid(row=1, column=0, sticky='EW', columnspan=2, padx=(760,760))
+
 root.configure(background = 'grey')
 root.attributes('-fullscreen', True)
 
